@@ -52,7 +52,7 @@ export const simulateUPIFetch = async (): Promise<Transaction[]> => {
 
 export const categorizeTransaction = (description: string, merchant: string): string => {
   const categoryKeywords = {
-    'Food': ['swiggy', 'zomato', 'restaurant', 'food', 'cafe', 'starbucks', 'mcdonald', 'kfc', 'domino', 'food court', 'court', 'canteen', 'mess', 'dhaba', 'eatery'],
+    'Food': ['swiggy', 'zomato', 'restaurant', 'food', 'cafe', 'starbucks', 'mcdonald', 'kfc', 'domino', 'food court', 'foodcourt', 'court', 'canteen', 'mess', 'dhaba', 'eatery', 'eating', 'dine', 'dining'],
     'Groceries': ['bigbasket', 'grofers', 'blinkit', 'grocery', 'supermarket', 'dmart'],
     'Electricity': ['bses', 'bescom', 'kseb', 'mseb', 'electricity', 'power', 'energy'],
     'Utilities': ['airtel', 'jio', 'vodafone', 'bsnl', 'telecom', 'mobile', 'broadband', 'wifi'],
@@ -63,10 +63,23 @@ export const categorizeTransaction = (description: string, merchant: string): st
     'Electronics': ['croma', 'reliance digital', 'electronics', 'mobile', 'laptop'],
   };
   
-  const text = `${description} ${merchant}`.toLowerCase();
+  // Create a comprehensive text for matching that includes both description and merchant
+  const text = `${description} ${merchant}`.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ');
+  
+  // Special handling for "court" - if it appears, likely food court
+  if (text.includes('court') && !text.includes('law') && !text.includes('legal')) {
+    return 'Food';
+  }
   
   for (const [category, keywords] of Object.entries(categoryKeywords)) {
-    if (keywords.some(keyword => text.includes(keyword))) {
+    if (keywords.some(keyword => {
+      // Handle multi-word keywords like "food court"
+      if (keyword.includes(' ')) {
+        return text.includes(keyword);
+      }
+      // For single words, check if they appear as whole words or parts
+      return text.includes(keyword);
+    })) {
       return category;
     }
   }
