@@ -123,4 +123,3 @@ export const SAMPLE_SMS_MESSAGES = [
   "You paid Rs.1,800 to MYNTRA using UPI. Axis Bank TXN No: AX345678901. Happy shopping!",
   "Rs.299 paid to AIRTEL via UPI for mobile recharge. Transaction successful. Ref: AR567890123"
 ];
-```
