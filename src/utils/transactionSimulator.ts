@@ -52,7 +52,7 @@ export const simulateUPIFetch = async (): Promise<Transaction[]> => {
 
 export const categorizeTransaction = (description: string, merchant: string): string => {
   const categoryKeywords = {
-    'Food': ['swiggy', 'zomato', 'restaurant', 'food', 'cafe', 'starbucks', 'mcdonald', 'kfc', 'domino'],
+    'Food': ['swiggy', 'zomato', 'restaurant', 'food', 'cafe', 'starbucks', 'mcdonald', 'kfc', 'domino', 'food court', 'court', 'canteen', 'mess', 'dhaba', 'eatery'],
     'Groceries': ['bigbasket', 'grofers', 'blinkit', 'grocery', 'supermarket', 'dmart'],
     'Electricity': ['bses', 'bescom', 'kseb', 'mseb', 'electricity', 'power', 'energy'],
     'Utilities': ['airtel', 'jio', 'vodafone', 'bsnl', 'telecom', 'mobile', 'broadband', 'wifi'],
